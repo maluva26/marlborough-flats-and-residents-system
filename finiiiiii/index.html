@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marlborough Flats & Apartments - Visitor Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-container">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h1>Marlborough Flats & Apartments</h1>
+                    <p>Visitor Management System</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+                <div class="login-hint">
+                    <p><strong>Admin Password:</strong> admin123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="screen">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-small">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Marlborough VMS</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    <a href="#" class="nav-link" data-page="newRequest">
+                        <i class="fas fa-user-plus"></i> New Request
+                    </a>
+                    <a href="#" class="nav-link" data-page="visitors">
+                        <i class="fas fa-users"></i> Visitors
+                    </a>
+                    <a href="#" class="nav-link" data-page="entries">
+                        <i class="fas fa-sign-in-alt"></i> Entry Log
+                    </a>
+                    <a href="#" class="nav-link" data-page="reports">
+                        <i class="fas fa-chart-bar"></i> Reports
+                    </a>
+                    <a href="#" class="nav-link" data-page="gateVerify">
+                        <i class="fas fa-torii-gate"></i> Gate Verify
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <button id="logoutAdmin" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+            <div class="main-content">
+                <!-- Dashboard Page -->
+                <div id="dashboardPage" class="page active">
+                    <div class="page-header">
+                        <h2><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2>
+                        <span class="date" id="currentDate"></span>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card pending">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Pending Requests</h3>
+                                <p class="stat-number" id="pendingCount">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card approved">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Approved Today</h3>
+                                <p class="stat-number" id="approvedTodayCount">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card visitors">
+                            <div class="stat-icon">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Visitors</h3>
+                                <p class="stat-number" id="totalVisitorsCount">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card entries">
+                            <div class="stat-icon">
+                                <i class="fas fa-door-open"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Entries Today</h3>
+                                <p class="stat-number" id="entriesTodayCount">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                        <div id="recentActivity" class="activity-list">
+                            <p class="no-activity">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Request Page -->
+                <div id="newRequestPage" class="page">
+                    <div class="page-header">
+                        <h2><i class="fas fa-user-plus"></i> New Visitor Request</h2>
+                    </div>
+                    <div class="form-container">
+                        <form id="visitorRequestForm">
+                            <div class="form-section">
+                                <h3>Resident Details</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Resident Full Name *</label>
+                                        <input type="text" id="residentName" placeholder="Enter resident name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Unit/Apartment Number *</label>
+                                        <input type="text" id="residentUnit" placeholder="e.g., Flat 12A" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Resident Phone *</label>
+                                        <input type="tel" id="residentPhone" placeholder="Phone number" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Visitor Details</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Visitor Full Name *</label>
+                                        <input type="text" id="visitorName" placeholder="Enter visitor name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Visitor Phone *</label>
+                                        <input type="tel" id="visitorPhone" placeholder="Phone number" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Visitor ID Type</label>
+                                        <select id="visitorIdType">
+                                            <option value="national_id">National ID</option>
+                                            <option value="passport">Passport</option>
+                                            <option value="drivers_license">Driver's License</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Visitor ID Number</label>
+                                        <input type="text" id="visitorIdNumber" placeholder="ID number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Visit Details</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Expected Visit Date *</label>
+                                        <input type="date" id="visitDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Expected Time *</label>
+                                        <input type="time" id="visitTime" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Visit Duration (hours)</label>
+                                        <select id="visitDuration">
+                                            <option value="1">1 hour</option>
+                                            <option value="2">2 hours</option>
+                                            <option value="3">3 hours</option>
+                                            <option value="4">4 hours</option>
+                                            <option value="8">Half day (8 hours)</option>
+                                            <option value="24">Full day (24 hours)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Purpose of Visit *</label>
+                                        <select id="visitPurpose" required>
+                                            <option value="">Select purpose</option>
+                                            <option value="family">Family Visit</option>
+                                            <option value="friend">Friend Visit</option>
+                                            <option value="business">Business</option>
+                                            <option value="delivery">Delivery</option>
+                                            <option value="maintenance">Maintenance</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Intention Message *</label>
+                                    <textarea id="visitIntention" placeholder="Describe the purpose/intention of the visit..." rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary btn-large">
+                                <i class="fas fa-paper-plane"></i> Submit Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Visitors List Page -->
+                <div id="visitorsPage" class="page">
+                    <div class="page-header">
+                        <h2><i class="fas fa-users"></i> Visitor Requests</h2>
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-filter="all">All</button>
+                            <button class="filter-tab" data-filter="pending">Pending</button>
+                            <button class="filter-tab" data-filter="approved">Approved</button>
+                            <button class="filter-tab" data-filter="completed">Completed</button>
+                            <button class="filter-tab" data-filter="expired">Expired</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="visitorsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Visitor</th>
+                                    <th>Resident</th>
+                                    <th>Purpose</th>
+                                    <th>Visit Time</th>
+                                    <th>PIN Code</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="visitorsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Entry Log Page -->
+                <div id="entriesPage" class="page">
+                    <div class="page-header">
+                        <h2><i class="fas fa-sign-in-alt"></i> Entry Log</h2>
+                    </div>
+                    <div class="table-container">
+                        <table id="entriesTable">
+                            <thead>
+                                <tr>
+                                    <th>Entry Time</th>
+                                    <th>Exit Time</th>
+                                    <th>Visitor</th>
+                                    <th>Resident</th>
+                                    <th>PIN Code</th>
+                                    <th>Access Gate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="entriesTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div id="reportsPage" class="page">
+                    <div class="page-header">
+                        <h2><i class="fas fa-chart-bar"></i> Reports</h2>
+                        <button id="exportReport" class="btn-secondary">
+                            <i class="fas fa-download"></i> Export to Documents
+                        </button>
+                    </div>
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>Visitors Summary</h3>
+                            <div class="report-stats">
+                                <div class="report-stat">
+                                    <span>Total Visits</span>
+                                    <strong id="reportTotalVisits">0</strong>
+                                </div>
+                                <div class="report-stat">
+                                    <span>Pending</span>
+                                    <strong id="reportPending">0</strong>
+                                </div>
+                                <div class="report-stat">
+                                    <span>Approved</span>
+                                    <strong id="reportApproved">0</strong>
+                                </div>
+                                <div class="report-stat">
+                                    <span>Completed</span>
+                                    <strong id="reportCompleted">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <h3>This Month</h3>
+                            <div class="report-stats">
+                                <div class="report-stat">
+                                    <span>Requests</span>
+                                    <strong id="reportThisMonth">0</strong>
+                                </div>
+                                <div class="report-stat">
+                                    <span>Entries</span>
+                                    <strong id="reportEntriesThisMonth">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Visitor statistics chart will appear here</p>
+                    </div>
+                </div>
+
+                <!-- Gate Verification Page (in Admin Dashboard) -->
+                <div id="gateVerifyPage" class="page">
+                    <div class="page-header">
+                        <h2><i class="fas fa-torii-gate"></i> Gate Verification</h2>
+                    </div>
+                    <div class="verify-page-container">
+                        <div class="verify-card">
+                            <div class="verify-icon-large">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <h3>Verify Visitor Access</h3>
+                            <p>Enter the visitor's 5-character PIN code to verify and grant access</p>
+                            <form id="gateVerifyForm">
+                                <div class="pin-input-group large">
+                                    <input type="text" class="pin-input" maxlength="1" data-index="0" placeholder="1">
+                                    <input type="text" class="pin-input" maxlength="1" data-index="1" placeholder="2">
+                                    <input type="text" class="pin-input" maxlength="1" data-index="2" placeholder="A">
+                                    <input type="text" class="pin-input" maxlength="1" data-index="3" placeholder="B">
+                                    <input type="text" class="pin-input" maxlength="1" data-index="4" placeholder="3">
+                                </div>
+                                <input type="hidden" id="gateFullPin">
+                                <button type="submit" class="btn-primary btn-large">
+                                    <i class="fas fa-search"></i> Verify Access
+                                </button>
+                            </form>
+                            <div id="gateVerifyResult" class="verify-result"></div>
+                        </div>
+                        <div class="gate-history-card">
+                            <h3><i class="fas fa-history"></i> Recent Entries</h3>
+                            <div id="adminGateHistory" class="gate-history-list">
+                                <p class="no-activity">No entries recorded yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- PIN Display Modal -->
+        <div id="pinModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h2>Request Approved!</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="pin-display">
+                        <p class="pin-label">Visitor Access PIN</p>
+                        <div class="pin-code" id="displayPin">------</div>
+                        <p class="pin-expiry">Valid for 14 days</p>
+                    </div>
+                    <div class="visitor-summary">
+                        <h3>Visitor Details</h3>
+                        <p><strong>Name:</strong> <span id="summaryVisitor"></span></p>
+                        <p><strong>Resident:</strong> <span id="summaryResident"></span></p>
+                        <p><strong>Date:</strong> <span id="summaryDate"></span></p>
+                        <p><strong>Time:</strong> <span id="summaryTime"></span></p>
+                    </div>
+                    <div class="pin-instructions">
+                        <h4><i class="fas fa-info-circle"></i> Instructions</h4>
+                        <ol>
+                            <li>Share this PIN with the visitor</li>
+                            <li>The visitor must show this PIN at the gate</li>
+                            <li>Guard will verify and grant access</li>
+                            <li>PIN expires in 14 days if not used</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="closePinModal" class="btn-primary">
+                        <i class="fas fa-copy"></i> Copy & Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Request Modal -->
+        <div id="viewRequestModal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>Visit Request Details</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body" id="requestDetails">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary close-modal-btn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Access Granted Modal -->
+        <div id="accessModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="accessIcon" class="access-icon"></div>
+                    <h2 id="accessTitle">Access Granted</h2>
+                </div>
+                <div class="modal-body">
+                    <div id="accessDetails" class="access-details"></div>
+                    <button id="closeAccessModal" class="btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
